@@ -128,14 +128,17 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Algorithm Visualizer')),
+      appBar: AppBar(
+        title: Text('Algorithm Visualizer',style: TextStyle(fontSize: 22,fontWeight: FontWeight.w600,color: Theme.of(context).colorScheme.inversePrimary),),
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        ),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              SingleChildScrollView(scrollDirection: Axis.horizontal,child: _buildControls(),),
+              _buildControls(),
               
               const SizedBox(height: 12),
               Expanded(child: _buildVisualizerArea()),
@@ -149,150 +152,226 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildControls() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            const Text('Algorithm: '),
-            const SizedBox(width: 8),
-            DropdownButton<Algorithm>(
-              value: _algo,
-              items: const [
-                DropdownMenuItem(value: Algorithm.mergeSort, child: Text('Merge Sort')),
-                DropdownMenuItem(value: Algorithm.quickSort, child: Text('Quick Sort')),
-                DropdownMenuItem(value: Algorithm.rabinKarp, child: Text('Rabin-Karp')),
-              ],
-              onChanged: (v) {
-                if (v == null) return;
-                setState(() {
-                  _algo = v;
-                  _stop();
-                });
-              },
+    return Card(
+      elevation: 10,
+      child: Column(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.primary,
+              borderRadius: BorderRadius.only(topLeft: Radius.circular(12),topRight: Radius.circular(12)),
             ),
-            const SizedBox(width: 12),
-            if (_algo != Algorithm.rabinKarp) ...[
-              ElevatedButton.icon(onPressed: _generateArray, icon: const Icon(Icons.shuffle), label: const Text('Randomize')),
-              const SizedBox(width: 8),
-              ElevatedButton.icon(onPressed: _generateFramesForSorting, icon: const Icon(Icons.playlist_add), label: const Text('Prepare')),
-              const SizedBox(width: 8),
-              const Text('Size:'),
-              Slider(
-                value: _arraySize.toDouble(),
-                min: 5,
-                max: 120,
-                divisions: 115,
-                label: '$_arraySize',
-                onChanged: (v) {
-                  _arraySize = v.toInt();
-                  _generateArray();
-                },
-              ),
-            ],
-            if (_algo == Algorithm.rabinKarp) ...[
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+            child: Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(
                     children: [
-                      TextField(controller: _textController, decoration: const InputDecoration(labelText: 'Text')),
-                      TextField(controller: _patternController, decoration: const InputDecoration(labelText: 'Pattern')),
-                      const SizedBox(height: 6),
-                      Row(children: [
-                        ElevatedButton.icon(onPressed: _generateFramesForRabinKarp, icon: const Icon(Icons.playlist_add), label: const Text('Prepare RK')),
-                        const SizedBox(width: 8),
-                        ElevatedButton.icon(onPressed: () {
-                          _textController.text = 'ABABDABACDABABCABAB';
-                          _patternController.text = 'ABABCABAB';
-                        }, icon: const Icon(Icons.refresh), label: const Text('Reset')),
-                      ])
+                      Column(
+                        children: [
+                          Row(
+                            children: [
+                              const Text('Algorithm: ',style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500),),
+                              const SizedBox(width: 22),
+                              DropdownButton<Algorithm>(
+                                borderRadius: BorderRadius.circular(12),
+                                focusColor: Theme.of(context).colorScheme.surface,
+                                value: _algo,
+                                items: const [
+                                  DropdownMenuItem(value: Algorithm.mergeSort, child: Text('Merge Sort')),
+                                  DropdownMenuItem(value: Algorithm.quickSort, child: Text('Quick Sort')),
+                                  //DropdownMenuItem(value: Algorithm.rabinKarp, child: Text('Rabin-Karp')),
+                                ],
+                                onChanged: (v) {
+                                  if (v == null) return;
+                                  setState(() {
+                                    _algo = v;
+                                    _stop();
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                            const SizedBox(width: 9,),
+                            const Text('Size:',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500),),
+                            Slider(
+                            inactiveColor: Theme.of(context).colorScheme.surface,
+                            activeColor: Theme.of(context).colorScheme.inversePrimary,
+                            value: _arraySize.toDouble(),
+                            min: 5,
+                            max: 60,
+                            divisions: 115,
+                            label: '$_arraySize',
+                            onChanged: (v) {
+                            _arraySize = v.toInt();
+                            _generateArray();     
+                            },
+                            ),
+                          ],
+                          ),
+                  ],
+                  ),
+                    
+                  Column(
+                    children: [
+                      ElevatedButton.icon(
+                        onPressed: _generateArray, 
+                        icon: Icon(Icons.shuffle,color: Theme.of(context).colorScheme.inversePrimary,), 
+                        label: Text('Randomize',style: TextStyle(color: Theme.of(context).colorScheme.inversePrimary),
+                        ),
+                      ),
+                            
+                      ElevatedButton.icon(
+                        onPressed: _generateFramesForSorting, 
+                        icon: Icon(Icons.playlist_add,color: Theme.of(context).colorScheme.inversePrimary,), 
+                        label: Text('Prepare',style: TextStyle(color: Theme.of(context).colorScheme.inversePrimary),)
+                        ),
+                    ],
+                    ),
                     ],
                   ),
-                ),
+                  
+                  if (_algo == Algorithm.rabinKarp) ...[
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            TextField(controller: _textController, decoration: const InputDecoration(labelText: 'Text')),
+                            TextField(controller: _patternController, decoration: const InputDecoration(labelText: 'Pattern')),
+                            const SizedBox(height: 6),
+                            Row(children: [
+                              ElevatedButton.icon(onPressed: _generateFramesForRabinKarp, icon: const Icon(Icons.playlist_add), label: const Text('Prepare RK')),
+                              const SizedBox(width: 8),
+                              ElevatedButton.icon(onPressed: () {
+                                _textController.text = 'ABABDABACDABABCABAB';
+                                _patternController.text = 'ABABCABAB';
+                              }, icon: const Icon(Icons.refresh), label: const Text('Reset')),
+                            ])
+                          ],
+                        ),
+                      ),
+                    ),
+                  ]
+                ],
               ),
-            ]
-          ],
-        ),
-        const SizedBox(height: 8),
-        Row(children: [
-          const Text('Speed:'),
-          Slider(
-            value: _speedMs.toDouble(),
-            min: 50,
-            max: 1200,
-            divisions: 23,
-            label: '$_speedMs ms',
-            onChanged: (v) {
-              _speedMs = v.toInt();
-              if (_isPlaying) {
-                _stop();
-                _play();
-              } else {
-                setState(() {});
-              }
-            },
+            ),
           ),
-          const SizedBox(width: 8),
-          ElevatedButton.icon(onPressed: _isPlaying ? _stop : _play, icon: Icon(_isPlaying ? Icons.pause : Icons.play_arrow), label: Text(_isPlaying ? 'Pause' : 'Play')),
-          const SizedBox(width: 8),
-          IconButton(onPressed: _stepBackward, icon: const Icon(Icons.skip_previous)),
-          IconButton(onPressed: _stepForward, icon: const Icon(Icons.skip_next)),
-        ])
-      ],
+          Container(
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.secondary,
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(12),
+                bottomRight: Radius.circular(12)
+                )
+              ),
+            child: Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                Text('Duration:',style: TextStyle(fontSize: 15.4,fontWeight: FontWeight.w500),),
+                Slider(
+                  inactiveColor: Theme.of(context).colorScheme.primary,
+                  activeColor: Theme.of(context).colorScheme.inversePrimary,
+                  value: _speedMs.toDouble(),
+                  min: 30,
+                  max: 300,
+                  divisions: 23,
+                  label: '$_speedMs ms',
+                  onChanged: (v) {
+                    _speedMs = v.toInt();
+                    if (_isPlaying) {
+                      _stop();
+                      _play();
+                    } else {
+                      setState(() {});
+                    }
+                  },
+                ),
+                const SizedBox(width: 8),
+                Column(
+                  children: [
+                    ElevatedButton.icon(
+                      onPressed: _isPlaying ? _stop : _play,
+                       icon: Icon(_isPlaying ? Icons.pause : Icons.play_arrow,color: Theme.of(context).colorScheme.inversePrimary,), 
+                    label: Text(_isPlaying ? 'Pause' : 'Play',style: TextStyle(color: Theme.of(context).colorScheme.inversePrimary),)),
+                    const SizedBox(width: 8),
+                    Row(
+                      children: [
+                        IconButton(onPressed: _stepBackward, icon: const Icon(Icons.skip_previous)),
+                        IconButton(onPressed: _stepForward, icon: const Icon(Icons.skip_next)),
+                      ],
+                    ),
+                  ],
+                ),
+              ]),
+            ),
+          )
+        ]
+      ),
     );
   }
 
   Widget _buildVisualizerArea() {
-    return Container(
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(border: Border.all(color: Colors.black12), borderRadius: BorderRadius.circular(8)),
-      child: _algo == Algorithm.rabinKarp ? _buildRabinKarpView() : _buildSortingView(),
+    return Card(
+      elevation: 10,
+      child: Container(
+        padding: const EdgeInsets.all(5),
+        decoration: BoxDecoration(border: Border.all(color: Theme.of(context).colorScheme.secondary), borderRadius: BorderRadius.circular(12)),
+        child: _algo == Algorithm.rabinKarp ? _buildRabinKarpView() : _buildSortingView(),
+      ),
     );
   }
 
   Widget _buildSortingView() {
     final frame = (_frames.isNotEmpty && _currentFrame < _frames.length) ? _frames[_currentFrame] : Frame(_array.toList());
     final arr = frame.arr;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Expanded(
-          child: LayoutBuilder(builder: (context, constraints) {
-            final maxVal = arr.isNotEmpty ? arr.reduce(max).toDouble() : 1.0;
-            final barWidth = max(4.0, (constraints.maxWidth - 8) / (arr.isEmpty? 1 : arr.length) - 2);
-
-            return SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: SizedBox(
-                height: constraints.maxHeight,
-                width: max(constraints.maxWidth, barWidth * arr.length + 40),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: List.generate(arr.length, (i) {
-                    double h = (arr[i] / maxVal) * (constraints.maxHeight - 20);
-                    Color color = Colors.blueGrey.shade300;
-                    if (frame.a == i || frame.b == i) {
-                      if (frame.op.contains('swap')){ color = Colors.redAccent;}
-                      else if (frame.op.contains('set')){ color = Colors.green;}
-                      else {color = Colors.orangeAccent;}
-                    }
-                    return Container(
-                      width: barWidth,
-                      height: h,
-                      margin: const EdgeInsets.symmetric(horizontal: 1),
-                      decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(4)),
-                    );
-                  }),
+    return Container(
+      decoration: BoxDecoration(color: Theme.of(context).colorScheme.surface),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            child: LayoutBuilder(builder: (context, constraints) {
+              final maxVal = arr.isNotEmpty ? arr.reduce(max).toDouble() : 1.0;
+              final barWidth = max(4.0, (constraints.maxWidth - 8) / (arr.isEmpty? 1 : arr.length) - 2);
+      
+              return SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: SizedBox(
+                  height: constraints.maxHeight,
+                  width: max(constraints.maxWidth, barWidth * arr.length + 40),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: List.generate(arr.length, (i) {
+                      double h = (arr[i] / maxVal) * (constraints.maxHeight - 20);
+                      Color color = Colors.blueGrey.shade300;
+                      if (frame.a == i || frame.b == i) {
+                        if (frame.op.contains('swap')){ color = Colors.redAccent;}
+                        else if (frame.op.contains('set')){ color = Colors.green;}
+                        else {color = Colors.orangeAccent;}
+                      }
+                      return Container(
+                        width: barWidth,
+                        height: h,
+                        margin: const EdgeInsets.symmetric(horizontal: 1),
+                        decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(4)),
+                      );
+                    }),
+                  ),
                 ),
-              ),
-            );
-          }),
-        ),
-        const SizedBox(height: 8),
-        Text('Step: ${_currentFrame + 1} / ${_frames.length}   Op: ${_frames.isNotEmpty ? _frames[_currentFrame].op : ''}'),
-      ],
+              );
+            }),
+          ),
+          const SizedBox(height: 8),
+          Text('Step: ${_currentFrame + 1} / ${_frames.length}   Op: ${_frames.isNotEmpty ? _frames[_currentFrame].op : ''}'),
+        ],
+      ),
     );
   }
 
@@ -308,7 +387,7 @@ class _HomePageState extends State<HomePage> {
       final inWindow = i >= s && i < s + pat.length;
       Color bg = Colors.transparent;
       if (inWindow) {
-        bg = frame.match ? Colors.green.withOpacity(0.6) : Colors.orange.withOpacity(0.6);
+        bg = frame.match ? Colors.green.withValues(alpha: 0.6) : Colors.orange.withValues(alpha: 0.6); //with values 
       }
       spans.add(TextSpan(text: txt[i], style: TextStyle(backgroundColor: bg, fontSize: 20, color: Colors.black)));
     }
@@ -318,7 +397,7 @@ class _HomePageState extends State<HomePage> {
       children: [
         SingleChildScrollView(scrollDirection: Axis.horizontal, child: RichText(text: TextSpan(children: spans))),
         const SizedBox(height: 8),
-        Text('Shift: ${s}  Pattern hash: ${frame.patternHash}   Window hash: ${frame.textHash}  Match: ${frame.match}'),
+        Text('Shift: $s  Pattern hash: ${frame.patternHash}   Window hash: ${frame.textHash}  Match: ${frame.match}'), //removed braces: {s} => s
         const SizedBox(height: 8),
         Text('Step: ${_currentRKFrame + 1} / ${_rkFrames.length}'),
       ],
@@ -326,13 +405,16 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildPlaybackInfo() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text('Status: ${_isPlaying ? 'Playing' : 'Stopped'}'),
-        if (_algo != Algorithm.rabinKarp) Text('Array size: ${_array.length}'),
-        if (_algo == Algorithm.rabinKarp && _rkFrames.isNotEmpty) Text('RK steps: ${_rkFrames.length}'),
-      ],
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text('Status: ${_isPlaying ? 'Playing' : 'Stopped'}'),
+          if (_algo != Algorithm.rabinKarp) Text('Array size: ${_array.length}'),
+          if (_algo == Algorithm.rabinKarp && _rkFrames.isNotEmpty) Text('RK steps: ${_rkFrames.length}'),
+        ],
+      ),
     );
   }
 }

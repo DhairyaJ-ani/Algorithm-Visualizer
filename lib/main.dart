@@ -1,4 +1,6 @@
 import 'package:algorithm_visualizer/pages/home_page.dart';
+import 'package:algorithm_visualizer/themes/dark_mode.dart';
+import 'package:algorithm_visualizer/themes/light_mode.dart';
 import 'package:flutter/material.dart';
 
 
@@ -14,7 +16,8 @@ class AlgoVisualizerApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Algorithm Visualizer',
-      theme: ThemeData(primarySwatch: Colors.indigo),
+      theme: lightMode,
+      darkTheme: darkMode,
       home: const HomePage(),
     );
   }
