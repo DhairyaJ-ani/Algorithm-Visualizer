@@ -1,52 +1,106 @@
-# Algorithm Visualizer
+# 📊 Flutter Algorithm Visualizer
 
-A new Flutter project.
+A Flutter-based application to **visualize algorithms step by step**
+with interactive controls.\
+Currently supports sorting (Merge Sort, Quick Sort) and string search
+(Rabin--Karp).
 
-## Getting Started
+------------------------------------------------------------------------
 
-This project is a starting point for a Flutter application.
+## 🚀 Getting Started
 
-A few resources to get you started if this is your first Flutter project:
+### 1. Create a new Flutter project
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+``` bash
+flutter create algo_visualizer
+```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### 2. Replace `lib/main.dart`
 
-Flutter Algorithm Visualizer — Prototype
-File: main.dart
+Copy the provided prototype code into your project:
 
-## How to run
-1. Create a new Flutter project: flutter create algo_visualizer
-2. Replace lib/main.dart with this file's contents
-3. flutter run
+    /algo_visualizer/lib/main.dart
 
-## What this prototype contains
-- Visualizes: Merge Sort, Quick Sort (array bars) and Rabin-Karp (string search)
-- Controls: select algorithm, generate array/text, play/pause, step back/forward, speed slider, array size
-- Implementation approach: each algorithm "records" a list of frames (snapshots). The UI steps through these frames to show the algorithm's progress. Each frame optionally marks indices being compared/swapped so the UI can highlight them.
+### 3. Run the app
 
-## Step-by-step explanation (high-level)
-1. Data model
-   - Frame: snapshot of array + metadata (indices being compared/swapped + operation label).
-   - RKFrame: snapshot for Rabin-Karp showing current shift index and the calculated hashes.
+``` bash
+flutter run
+```
 
-2. Algorithm instrumentation
-   - Merge sort and Quick sort functions operate on a mutable copy of the array and add Frame objects to a List<Frame> whenever they compare or write values.
-   - Rabin-Karp calculates rolling hashes and records an RKFrame for each shift (plus match check frames where necessary).
+------------------------------------------------------------------------
 
-3. UI playback
-   - The frames list becomes the timeline. A Timer drives playback (play/pause). A step-forward/backward button moves the current index manually.
-   - The visualization area draws bars for sorting (height proportional to value). For RK a text view highlights the current window and shows pattern/hash info.
+## ✨ Features
 
-## Legend used in the UI
-- Orange (compare): indices currently being compared.
-- Red (swap): indices that were swapped.
-- Green (match - Rabin-Karp): current window matched the pattern.
+-   **Algorithm Visualizations**
+    -   Merge Sort (array bar visualization)
+    -   Quick Sort (array bar visualization)
+    -   Rabin--Karp (string search with rolling hash)
+-   **Controls**
+    -   Select algorithm\
+    -   Generate new array or input text\
+    -   Play / Pause simulation\
+    -   Step forward / backward through frames\
+    -   Adjust playback speed with a slider\
+    -   Configure array size
+-   **Highlights**
+    -   Orange 🔶 → Comparing indices\
+    -   Red 🔴 → Swapped indices\
+    -   Green 🟢 → Match found (Rabin--Karp)
 
-## Limitations & notes
-- This is a compact prototype aimed at clarity. For production you'd split into files and add tests.
-- Very large array sizes will create many frames and can use lots of memory — keep size under ~120 for smooth performance.
+------------------------------------------------------------------------
 
+## 🛠 Implementation Details
+
+### Data Model
+
+-   **Frame** → Snapshot of array state + metadata (e.g., indices being
+    compared/swapped).\
+-   **RKFrame** → Snapshot for Rabin--Karp showing shift index and
+    calculated hashes.
+
+### Algorithm Instrumentation
+
+-   Sorting algorithms work on a mutable copy of the array.\
+-   Each step produces a `Frame` added to the timeline.\
+-   Rabin--Karp records rolling hashes and window matches with
+    `RKFrame`.
+
+### Playback
+
+-   The app steps through recorded frames like a **timeline**.\
+-   A `Timer` drives playback when running, or you can manually step.\
+-   Visualization:
+    -   Sorting → Bars with height proportional to array values\
+    -   Rabin--Karp → Text highlighting + hash info display
+
+------------------------------------------------------------------------
+
+## 📌 Limitations & Notes
+
+-   Designed as a **prototype for clarity** --- in production, split
+    logic/UI into separate files and add tests.\
+-   Large arrays (\>120 elements) may cause high memory usage and slow
+    rendering.
+
+------------------------------------------------------------------------
+
+## 📚 Tech Stack
+
+-   **Flutter** (UI + logic)\
+-   **Dart** (algorithm implementations + frame recording)
+
+------------------------------------------------------------------------
+
+## 🚧 Future Improvements
+
+-   Add more algorithms (DFS, BFS, Dijkstra, KMP, Heap Sort, etc.)\
+-   Save/load custom inputs\
+-   Dark/light themes\
+-   Export animations as GIFs/PNGs\
+-   Better performance for larger arrays
+
+------------------------------------------------------------------------
+
+## 📷 Demo (Optional Section)
+
+*Add screenshots or GIFs of the app in action once available.*
