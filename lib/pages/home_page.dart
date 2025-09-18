@@ -71,13 +71,13 @@ class _HomePageState extends State<HomePage> {
     setState(() {});
   }
 
-  void _generateFramesForRabinKarp() {
-    final text = _textController.text;
-    final pat = _patternController.text;
-    _rkFrames = rabinKarpSteps(text, pat);
-    _currentRKFrame = 0;
-    setState(() {});
-  }
+  // void _generateFramesForRabinKarp() {
+  //   final text = _textController.text;
+  //   final pat = _patternController.text;
+  //   _rkFrames = rabinKarpSteps(text, pat);
+  //   _currentRKFrame = 0;
+  //   setState(() {});
+  // }
 
   void _play() {
     if (_isPlaying) return;
@@ -129,7 +129,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Algorithm Visualizer',style: TextStyle(fontSize: 22,fontWeight: FontWeight.w600,color: Theme.of(context).colorScheme.inversePrimary),),
+        title: Text('Algorithm Visualizer',style: TextStyle(fontSize: 22,fontWeight: FontWeight.w600),),
         backgroundColor: Theme.of(context).colorScheme.primary,
         ),
       body: Padding(
@@ -198,8 +198,8 @@ class _HomePageState extends State<HomePage> {
                             const SizedBox(width: 9,),
                             const Text('Size:',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500),),
                             Slider(
-                            inactiveColor: Theme.of(context).colorScheme.surface,
-                            activeColor: Theme.of(context).colorScheme.inversePrimary,
+                            inactiveColor: Theme.of(context).colorScheme.inversePrimary,
+                            activeColor: Theme.of(context).colorScheme.tertiary,
                             value: _arraySize.toDouble(),
                             min: 5,
                             max: 60,
@@ -219,44 +219,44 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       ElevatedButton.icon(
                         onPressed: _generateArray, 
-                        icon: Icon(Icons.shuffle,color: Theme.of(context).colorScheme.inversePrimary,), 
-                        label: Text('Randomize',style: TextStyle(color: Theme.of(context).colorScheme.inversePrimary),
+                        icon: Icon(Icons.shuffle,color: Theme.of(context).colorScheme.tertiary,), 
+                        label: Text('Randomize',style: TextStyle(color: Theme.of(context).colorScheme.tertiary,fontWeight: FontWeight.w600),
                         ),
                       ),
                             
                       ElevatedButton.icon(
                         onPressed: _generateFramesForSorting, 
-                        icon: Icon(Icons.playlist_add,color: Theme.of(context).colorScheme.inversePrimary,), 
-                        label: Text('Prepare',style: TextStyle(color: Theme.of(context).colorScheme.inversePrimary),)
+                        icon: Icon(Icons.playlist_add,color: Theme.of(context).colorScheme.tertiary,), 
+                        label: Text('Prepare',style: TextStyle(color: Theme.of(context).colorScheme.tertiary,fontWeight: FontWeight.w700),)
                         ),
                     ],
                     ),
                     ],
                   ),
                   
-                  if (_algo == Algorithm.rabinKarp) ...[
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            TextField(controller: _textController, decoration: const InputDecoration(labelText: 'Text')),
-                            TextField(controller: _patternController, decoration: const InputDecoration(labelText: 'Pattern')),
-                            const SizedBox(height: 6),
-                            Row(children: [
-                              ElevatedButton.icon(onPressed: _generateFramesForRabinKarp, icon: const Icon(Icons.playlist_add), label: const Text('Prepare RK')),
-                              const SizedBox(width: 8),
-                              ElevatedButton.icon(onPressed: () {
-                                _textController.text = 'ABABDABACDABABCABAB';
-                                _patternController.text = 'ABABCABAB';
-                              }, icon: const Icon(Icons.refresh), label: const Text('Reset')),
-                            ])
-                          ],
-                        ),
-                      ),
-                    ),
-                  ]
+                  // if (_algo == Algorithm.rabinKarp) ...[
+                  //   Expanded(
+                  //     child: Padding(
+                  //       padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  //       child: Column(
+                  //         crossAxisAlignment: CrossAxisAlignment.start,
+                  //         children: [
+                  //           TextField(controller: _textController, decoration: const InputDecoration(labelText: 'Text')),
+                  //           TextField(controller: _patternController, decoration: const InputDecoration(labelText: 'Pattern')),
+                  //           const SizedBox(height: 6),
+                  //           Row(children: [
+                  //             ElevatedButton.icon(onPressed: _generateFramesForRabinKarp, icon: const Icon(Icons.playlist_add), label: const Text('Prepare RK')),
+                  //             const SizedBox(width: 8),
+                  //             ElevatedButton.icon(onPressed: () {
+                  //               _textController.text = 'ABABDABACDABABCABAB';
+                  //               _patternController.text = 'ABABCABAB';
+                  //             }, icon: const Icon(Icons.refresh), label: const Text('Reset')),
+                  //           ])
+                  //         ],
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ]
                 ],
               ),
             ),
@@ -274,10 +274,10 @@ class _HomePageState extends State<HomePage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                Text('Duration:',style: TextStyle(fontSize: 15.4,fontWeight: FontWeight.w500),),
+                Text('Interval:',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500),),
                 Slider(
-                  inactiveColor: Theme.of(context).colorScheme.primary,
-                  activeColor: Theme.of(context).colorScheme.inversePrimary,
+                  inactiveColor: Theme.of(context).colorScheme.inversePrimary,
+                  activeColor: Theme.of(context).colorScheme.tertiary,
                   value: _speedMs.toDouble(),
                   min: 30,
                   max: 300,
@@ -298,8 +298,8 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     ElevatedButton.icon(
                       onPressed: _isPlaying ? _stop : _play,
-                       icon: Icon(_isPlaying ? Icons.pause : Icons.play_arrow,color: Theme.of(context).colorScheme.inversePrimary,), 
-                    label: Text(_isPlaying ? 'Pause' : 'Play',style: TextStyle(color: Theme.of(context).colorScheme.inversePrimary),)),
+                       icon: Icon(_isPlaying ? Icons.pause : Icons.play_arrow,color: Theme.of(context).colorScheme.tertiary,), 
+                    label: Text(_isPlaying ? 'Pause' : 'Play',style: TextStyle(color: Theme.of(context).colorScheme.tertiary,fontWeight: FontWeight.w700),)),
                     const SizedBox(width: 8),
                     Row(
                       children: [
@@ -385,7 +385,7 @@ class _HomePageState extends State<HomePage> {
     List<TextSpan> spans = [];
     for (int i = 0; i < txt.length; i++) {
       final inWindow = i >= s && i < s + pat.length;
-      Color bg = Colors.transparent;
+      Color bg = const Color.fromARGB(255, 255, 124, 77);
       if (inWindow) {
         bg = frame.match ? Colors.green.withValues(alpha: 0.6) : Colors.orange.withValues(alpha: 0.6); //with values 
       }

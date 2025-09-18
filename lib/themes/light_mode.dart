@@ -6,7 +6,8 @@ ThemeData lightMode = ThemeData(
     surface: Colors.grey.shade300,
     primary: Colors.grey.shade400,
     secondary: Colors.grey.shade500,
-    inversePrimary: Colors.grey.shade800,
+    tertiary: const Color.fromARGB(255, 62, 61, 61),
+    inversePrimary: Colors.grey.shade700,
   ),
   textTheme: ThemeData.light().textTheme.apply(
     bodyColor: Colors.grey[800],
