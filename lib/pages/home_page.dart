@@ -130,7 +130,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Algorithm Visualizer',style: TextStyle(fontSize: 22,fontWeight: FontWeight.w600),),
-        backgroundColor: Theme.of(context).colorScheme.primary,
+        backgroundColor: Theme.of(context).colorScheme.secondary,
         ),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -350,7 +350,7 @@ class _HomePageState extends State<HomePage> {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: List.generate(arr.length, (i) {
                       double h = (arr[i] / maxVal) * (constraints.maxHeight - 20);
-                      Color color = Colors.blueGrey.shade300;
+                      Color color = Colors.blue.shade300;
                       if (frame.a == i || frame.b == i) {
                         if (frame.op.contains('swap')){ color = Colors.redAccent;}
                         else if (frame.op.contains('set')){ color = Colors.green;}
