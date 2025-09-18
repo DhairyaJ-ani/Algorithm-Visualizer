@@ -1,6 +1,6 @@
 import 'frames.dart';
 
-enum Algorithm { mergeSort, quickSort, rabinKarp }
+enum Algorithm { mergeSort, quickSort, rabinKarp, bubbleSort, selectionSort, insertionSort}
 
  void mergeSort(List<int> arr, int l, int r, List<Frame> frames) {
     if (l >= r) return;
@@ -102,3 +102,72 @@ enum Algorithm { mergeSort, quickSort, rabinKarp }
     return steps;
   }
 
+// Bubble Sort (records compare + swap)
+void bubbleSort(List<int> arr, int l, int r, List<Frame> frames) {
+  if (l >= r) return;
+  for (int end = r; end > l; end--) {
+    bool swapped = false;
+    for (int i = l; i < end; i++) {
+      // compare i and i+1
+      frames.add(Frame(arr.toList(), a: i, b: i + 1, op: 'compare'));
+      if (arr[i] > arr[i + 1]) {
+        // swap and record
+        int t = arr[i];
+        arr[i] = arr[i + 1];
+        arr[i + 1] = t;
+        frames.add(Frame(arr.toList(), a: i, b: i + 1, op: 'swap'));
+        swapped = true;
+      }
+    }
+    // optional: mark the element at 'end' as set/placed
+    frames.add(Frame(arr.toList(), a: end, op: 'set'));
+    if (!swapped) break; // array already sorted
+  }
+}
+
+// Selection Sort (records compare while finding min, and swap when done)
+void selectionSort(List<int> arr, int l, int r, List<Frame> frames) {
+  if (l >= r) return;
+  for (int i = l; i < r; i++) {
+    int minIdx = i;
+    for (int j = i + 1; j <= r; j++) {
+      // compare current min and j
+      frames.add(Frame(arr.toList(), a: minIdx, b: j, op: 'compare'));
+      if (arr[j] < arr[minIdx]) {
+        minIdx = j;
+        // optional: mark new min (we use 'compare' frames to show this)
+        frames.add(Frame(arr.toList(), a: minIdx, op: 'set'));
+      }
+    }
+    if (minIdx != i) {
+      int t = arr[i];
+      arr[i] = arr[minIdx];
+      arr[minIdx] = t;
+      frames.add(Frame(arr.toList(), a: i, b: minIdx, op: 'swap'));
+    }
+    // mark position i as placed
+    frames.add(Frame(arr.toList(), a: i, op: 'set'));
+  }
+}
+
+// Insertion Sort (records compare + set for shifts and final insertion)
+// We'll shift elements right using 'set' frames and mark the final inserted position with 'set' too.
+void insertionSort(List<int> arr, int l, int r, List<Frame> frames) {
+  if (l >= r) return;
+  for (int i = l + 1; i <= r; i++) {
+    int key = arr[i];
+    int j = i - 1;
+    // compare key with arr[j]
+    frames.add(Frame(arr.toList(), a: j, b: i, op: 'compare'));
+    while (j >= l && arr[j] > key) {
+      // shift arr[j] to arr[j+1]
+      arr[j + 1] = arr[j];
+      frames.add(Frame(arr.toList(), a: j, b: j + 1, op: 'set')); // shift recorded as 'set'
+      j--;
+      if (j >= l) frames.add(Frame(arr.toList(), a: j, b: i, op: 'compare'));
+    }
+    // place key at arr[j+1]
+    arr[j + 1] = key;
+    frames.add(Frame(arr.toList(), a: j + 1, op: 'set'));
+  }
+}

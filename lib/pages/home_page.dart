@@ -57,19 +57,35 @@ class _HomePageState extends State<HomePage> {
     setState(() {});
   }
 
-  void _generateFramesForSorting() {
-    final copy = _array.toList();
-    _frames = [Frame(copy.toList())];
-    if (copy.isEmpty) return;
-    if (_algo == Algorithm.mergeSort) {
+ void _generateFramesForSorting() {
+  final copy = _array.toList();
+  _frames = [Frame(copy.toList())];
+  if (copy.isEmpty) return;
+
+  switch (_algo) {
+    case Algorithm.mergeSort:
       mergeSort(copy, 0, copy.length - 1, _frames);
-    } else if (_algo == Algorithm.quickSort) {
+      break;
+    case Algorithm.quickSort:
       quickSort(copy, 0, copy.length - 1, _frames);
-    }
-    _frames.add(Frame(copy.toList(), op: 'done'));
-    _currentFrame = 0;
-    setState(() {});
+      break;
+    case Algorithm.bubbleSort:
+      bubbleSort(copy, 0, copy.length - 1, _frames);
+      break;
+    case Algorithm.selectionSort:
+      selectionSort(copy, 0, copy.length - 1, _frames);
+      break;
+    case Algorithm.insertionSort:
+      insertionSort(copy, 0, copy.length - 1, _frames);
+      break;
+    default:
+      break;
   }
+
+  _frames.add(Frame(copy.toList(), op: 'done'));
+  _currentFrame = 0;
+  setState(() {});
+}
 
   // void _generateFramesForRabinKarp() {
   //   final text = _textController.text;
@@ -172,7 +188,7 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           Row(
                             children: [
-                              const Text('Algorithm: ',style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500),),
+                              const Text('Algorithm: ',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w500),),
                               const SizedBox(width: 22),
                               DropdownButton<Algorithm>(
                                 borderRadius: BorderRadius.circular(12),
@@ -181,6 +197,9 @@ class _HomePageState extends State<HomePage> {
                                 items: const [
                                   DropdownMenuItem(value: Algorithm.mergeSort, child: Text('Merge Sort')),
                                   DropdownMenuItem(value: Algorithm.quickSort, child: Text('Quick Sort')),
+                                  DropdownMenuItem(value: Algorithm.bubbleSort, child: Text('Bubble Sort')),
+                                  DropdownMenuItem(value: Algorithm.selectionSort, child: Text('Selection Sort')),
+                                  DropdownMenuItem(value: Algorithm.insertionSort, child: Text('Insertion Sort')),
                                   //DropdownMenuItem(value: Algorithm.rabinKarp, child: Text('Rabin-Karp')),
                                 ],
                                 onChanged: (v) {
