@@ -19,7 +19,7 @@ class AlgoVisualizerApp extends StatelessWidget {
       title: 'Algorithm Visualizer',
       theme: lightMode,
       darkTheme: darkMode,
-      home: const AlgorithmsPage(),
+      home: const HomePage(),
     );
   }
 }
