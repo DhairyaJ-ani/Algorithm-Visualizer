@@ -96,12 +96,11 @@ flutter run
 
 -   Add more algorithms (DFS, BFS, Dijkstra, KMP, Heap Sort, etc.)
 -   Save/load custom inputs
--   Dark/light themes
 -   Export animations as GIFs/PNGs
 -   Better performance for larger arrays
 
 ------------------------------------------------------------------------
 
-## 📷 Demo (Optional Section)
+## 📷 Demo (Still in works Section)
 
-<img src="./assets/images/light-mode-screenshot.png" >
+<img src="./assets/images/light-mode-screenshot.png" height=500px >
