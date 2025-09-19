@@ -2,6 +2,10 @@ import 'frames.dart';
 
 enum Algorithm { mergeSort, quickSort, rabinKarp, bubbleSort, selectionSort, insertionSort}
 
+extension AlgorithmCount on Algorithm {
+  static int get count => Algorithm.values.length;
+}
+
  void mergeSort(List<int> arr, int l, int r, List<Frame> frames) {
     if (l >= r) return;
     int m = (l + r) >> 1;

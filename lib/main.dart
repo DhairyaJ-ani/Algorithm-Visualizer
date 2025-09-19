@@ -1,3 +1,4 @@
+import 'package:algorithm_visualizer/pages/algorithms_page.dart';
 import 'package:algorithm_visualizer/pages/home_page.dart';
 import 'package:algorithm_visualizer/themes/dark_mode.dart';
 import 'package:algorithm_visualizer/themes/light_mode.dart';
@@ -18,7 +19,7 @@ class AlgoVisualizerApp extends StatelessWidget {
       title: 'Algorithm Visualizer',
       theme: lightMode,
       darkTheme: darkMode,
-      home: const HomePage(),
+      home: const AlgorithmsPage(),
     );
   }
 }
