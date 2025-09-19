@@ -2,6 +2,7 @@ import 'dart:math';
 import 'dart:async';
 import 'package:algorithm_visualizer/algorithms/algos.dart';
 import 'package:algorithm_visualizer/algorithms/frames.dart';
+import 'package:algorithm_visualizer/components/drawer.dart';
 import 'package:flutter/material.dart';
 
 
@@ -148,6 +149,7 @@ class _HomePageState extends State<HomePage> {
         title: Text('Algorithm Visualizer',style: TextStyle(fontSize: 22,fontWeight: FontWeight.w600),),
         backgroundColor: Theme.of(context).colorScheme.secondary,
         ),
+        drawer: MyDrawer(),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Padding(

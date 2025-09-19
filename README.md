@@ -36,15 +36,16 @@ flutter run
     -   Quick Sort (array bar visualization)
     -   Rabin--Karp (string search with rolling hash)
 -   **Controls**
-    -   Select algorithm\
-    -   Generate new array or input text\
-    -   Play / Pause simulation\
-    -   Step forward / backward through frames\
-    -   Adjust playback speed with a slider\
+    -   Select algorithm
+    -   Generate new array or input text
+    -   Click prepare
+    -   Play / Pause simulation
+    -   Step forward / backward through frames
+    -   Adjust playback speed with a slider
     -   Configure array size
 -   **Highlights**
-    -   Orange 🔶 → Comparing indices\
-    -   Red 🔴 → Swapped indices\
+    -   Orange 🔶 → Comparing indices
+    -   Red 🔴 → Swapped indices
     -   Green 🟢 → Match found (Rabin--Karp)
 
 ------------------------------------------------------------------------
@@ -54,23 +55,23 @@ flutter run
 ### Data Model
 
 -   **Frame** → Snapshot of array state + metadata (e.g., indices being
-    compared/swapped).\
+    compared/swapped).
 -   **RKFrame** → Snapshot for Rabin--Karp showing shift index and
     calculated hashes.
 
 ### Algorithm Instrumentation
 
--   Sorting algorithms work on a mutable copy of the array.\
--   Each step produces a `Frame` added to the timeline.\
+-   Sorting algorithms work on a mutable copy of the array.
+-   Each step produces a `Frame` added to the timeline.
 -   Rabin--Karp records rolling hashes and window matches with
     `RKFrame`.
 
 ### Playback
 
--   The app steps through recorded frames like a **timeline**.\
--   A `Timer` drives playback when running, or you can manually step.\
+-   The app steps through recorded frames like a **timeline**.
+-   A `Timer` drives playback when running, or you can manually step.
 -   Visualization:
-    -   Sorting → Bars with height proportional to array values\
+    -   Sorting → Bars with height proportional to array values
     -   Rabin--Karp → Text highlighting + hash info display
 
 ------------------------------------------------------------------------
@@ -78,7 +79,7 @@ flutter run
 ## 📌 Limitations & Notes
 
 -   Designed as a **prototype for clarity** --- in production, split
-    logic/UI into separate files and add tests.\
+    logic/UI into separate files and add tests.
 -   Large arrays (\>120 elements) may cause high memory usage and slow
     rendering.
 
@@ -86,21 +87,21 @@ flutter run
 
 ## 📚 Tech Stack
 
--   **Flutter** (UI + logic)\
+-   **Flutter** (UI + logic)
 -   **Dart** (algorithm implementations + frame recording)
 
 ------------------------------------------------------------------------
 
 ## 🚧 Future Improvements
 
--   Add more algorithms (DFS, BFS, Dijkstra, KMP, Heap Sort, etc.)\
--   Save/load custom inputs\
--   Dark/light themes\
--   Export animations as GIFs/PNGs\
+-   Add more algorithms (DFS, BFS, Dijkstra, KMP, Heap Sort, etc.)
+-   Save/load custom inputs
+-   Dark/light themes
+-   Export animations as GIFs/PNGs
 -   Better performance for larger arrays
 
 ------------------------------------------------------------------------
 
 ## 📷 Demo (Optional Section)
 
-*Add screenshots or GIFs of the app in action once available.*
+<img src="./assets/images/light-mode-screenshot.png" >

@@ -20,6 +20,10 @@ class AlgoVisualizerApp extends StatelessWidget {
       theme: lightMode,
       darkTheme: darkMode,
       home: const HomePage(),
+      routes: {
+        '/home_page': (context) => HomePage(),
+        '/algorithms_page': (context) => AlgorithmsPage(),
+      },
     );
   }
 }
